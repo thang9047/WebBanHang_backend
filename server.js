@@ -15,6 +15,7 @@ app.use(fileUpload({
 
 // Router
 app.use('/user', require('./router/userRouter'))
+app.use('/category', require('./router/categoryRouter'))
 
 // Connect DB
 const URI = process.env.MONGDB_URL
