@@ -1,5 +1,7 @@
 const router = require('express').Router()
 const cateController = require('../controller/categoryController')
+const auth = require('../middleware/authen')
+const authAdmin = require('../middleware/authenAdmin')
 
 // router.get('/view', cateController.viewCategory)
 // router.post('/creatCategory',cateController.creatCategory)
@@ -7,9 +9,9 @@ const cateController = require('../controller/categoryController')
 // router.delete('delete;id', cateController.delete)
 router.route('/category')
     .get(cateController.viewCategory)
-    .post(cateController.creatCategory)
+    .post(auth, authAdmin, cateController.creatCategory)
 
 router.route('/category/:id')
-    .put(cateController.updateCategory)
-
+    .put(auth, authAdmin,cateController.updateCategory)
+    .delete(auth, authAdmin, cateController.deleteCategory)
 module.exports = router

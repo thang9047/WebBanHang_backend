@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const userController = require('../controller/userController')
-// const auth = require('../middleware/authen')
+const auth = require('../middleware/authen')
 
 
 
@@ -12,6 +12,6 @@ router.get('/logout', userController.logout)
 
 router.get('/refresh_token', userController.refreshToken)
 
-// router.get('/infor', auth, userController.getUser)
+router.get('/infor', auth, userController.getUser)
 
 module.exports = router
