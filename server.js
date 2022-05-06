@@ -15,14 +15,17 @@ app.use(fileUpload({
 
 // Router
 app.use('/user', require('./router/userRouter'))
-app.use('/category', require('./router/categoryRouter'))
+app.use('/api', require('./router/categoryRouter'))
+app.use('/api', require('./router/productRouter'))
 
 // Connect DB
 const URI = process.env.MONGDB_URL
 try{
   mongoose.connect(URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
+    // useCreateIndex: true,
+    // useFindAndModify: false,
+    useNewUrlParser: true,
+    useUnifiedTopology: true
 })
 console.log('Connect success to MongDb')
 }

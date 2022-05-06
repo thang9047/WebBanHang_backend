@@ -12,7 +12,7 @@ const categoryController = {
     creatCategory : async(req , res ) =>{
         try {
             const {name} = req.body;
-            const  category = await Category.findOne();
+            const  category = await Category.findOne({name});
             if(category) return res.status(400).json({msg : "This category already exists."})
             const addCategory = new Category({name})
             await addCategory.save()
@@ -23,11 +23,11 @@ const categoryController = {
     },
     updateCategory : async(req , res) =>{
         try {
-            
-        } catch (error) {
             const {name} = req.body;
             await Category.findOneAndUpdate({_id: req.params.id}, {name})
             res.json({msg : "Successfully update!"})
+        } catch (error) {
+            return res.status(500).json({msg: err.message})
         }
     }
 }

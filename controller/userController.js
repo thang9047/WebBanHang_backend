@@ -5,18 +5,18 @@ const jwt = require('jsonwebtoken')
 const userController = {
   register: async (req, res) => {
     try{
-      const {name, email, password} = req.body
+      const {name, email, password, role} = req.body
       const user = await Users.findOne({email})
-      if(user) return res.status(400).json({msg: "The Email already exist !"})
+      if(user) return res.status(400).json({msg: "Email đã tồn tại !"})
 
       if (password.length < 6) {
-        return res.status(500).json({msg: "Password at least 6 characters"})
+        return res.status(500).json({msg: "Mật khẩu ít nhất 6 kí tự"})
       }
       
       //  Password encryption
       const passwordHash = await bcrypt.hash(password, 10)
       const newUser = new Users({
-        name, email, password: passwordHash
+        name, email, password: passwordHash, role
       })
 
       // save to MongDB
@@ -42,11 +42,11 @@ const userController = {
 
       const user = await Users.findOne({email})
 
-      if(!user) return res.json({msg: "User does not exist !"})
+      if(!user) return res.json({msg: "User không tồn tại !"})
 
       const isMatch = await bcrypt.compare(password, user.password)
 
-      if(!isMatch) return res.json({msg: "Invalid password !"})
+      if(!isMatch) return res.json({msg: "Sai mật khẩu !"})
 
       //  If login success, create token and refresh_token
 
